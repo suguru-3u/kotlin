@@ -1,5 +1,9 @@
 package org.example.control_flow
 
+/**
+ * 公式サイト
+ * https://kotlinlang.org/docs/kotlin-tour-control-flow.html
+ */
 
 fun main() {
     problem1()
