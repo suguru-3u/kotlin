@@ -3,6 +3,7 @@ package org.example.control_flow
 /**
  * 公式サイト
  * https://kotlinlang.org/docs/kotlin-tour-control-flow.html
+ * https://kotlinlang.org/docs/control-flow.html#for-loops
  */
 
 fun main() {
