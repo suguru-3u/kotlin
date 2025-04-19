@@ -9,6 +9,44 @@ package org.example.control_flow
 fun main() {
     problem1()
     problem2()
+    filterAndPrint(listOf(1, 2, 3, 4, 5, 6))
+
+    val grid = listOf(
+        listOf(1, 2, 3, 4, 5),
+        listOf(6, 7, 8, 9, 10),
+        listOf(11, 12, 13, 14, 15),
+        listOf(16, 17, 18, 19, 20),
+        listOf(21, 22, 23, 24, 25)
+    )
+    searchGrid(grid)
+
+    getUserNameLength(User("test"))
+}
+
+fun filterAndPrint(listNum: List<Int>) {
+    listNum.forEach { value ->
+        // 5の処理をスキップしているだけ
+        if (value == 5) return@forEach
+        println(value)
+    }
+}
+
+fun searchGrid(grid: List<List<Int>>) {
+    outer@ for (row in grid) {
+        for (value in row) {
+            if (value == 10) {
+                println("Found 10 at value: $value")
+                break@outer
+            }
+        }
+    }
+}
+
+data class User(val name: String?)
+
+fun getUserNameLength(user: User?) {
+    val name = user?.name ?: return
+    println(name.length)
 }
 
 fun mainIf() {
