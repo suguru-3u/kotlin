@@ -2,7 +2,42 @@ package org.example.exceptions
 
 fun main() {
     registerUser(username = "Yuki", age = 20)
+
+    try {
+        authenticate("yes", true)
+    } catch (ex: Exception) {
+        when (ex) {
+            is InvalidCredentialsException -> println("InvalidCredentialsException")
+            is AccountLockedException -> println("AccountLockedException")
+            is TokenExpiredException -> println("TokenExpiredException")
+            else -> println("Exception")
+        }
+    }
 }
+
+
+sealed class AccountException(message: String, cause: Throwable? = null) :
+    Exception(message)
+
+class InvalidCredentialsException() :
+    AccountException("Invalid credentials")
+
+class AccountLockedException() :
+    AccountException("Account has been locked")
+
+class TokenExpiredException(
+    message: String = "Token expired",
+    cause: Throwable? = null
+) : AccountException(message, cause)
+
+
+fun authenticate(username: String, tokenValid: Boolean) {
+    if (username == "admin") throw InvalidCredentialsException()
+    if (username == "locked") throw AccountLockedException()
+    if (!tokenValid) throw TokenExpiredException("Hello")
+
+}
+
 
 /**
  * 前提条件関数を使った例外のスロー
