@@ -81,6 +81,73 @@ class C : A(), B {
     }
 }
 
+// 問題5: val と var のオーバーライドについて学びましょう。
+// - open class Book を定義し、open val title: String = "Unknown" を定義してください。
+// - class Novel を Book から継承し、title を var にして "Mystery Novel" にオーバーライドしてください。
+// - main 関数で Novel のインスタンスを作成し、title を出力後、別のタイトルに変更して再度出力してください。
+
+open class Book {
+    open val title: String = "Unknown"
+}
+
+class Novel : Book() {
+    override var title: String = "Mystery Novel"
+}
+
+
+// 問題6: プライマリコンストラクタとスーパークラスの初期化の順序を理解しましょう。
+// - open class Base を定義し、name: String を受け取るプライマリコンストラクタを作成してください。
+// - Base の init ブロック内で「Base initialized with name: $name」を出力してください。
+// - open val description: String を name.length に基づいて初期化し、その初期化もログとして出力してください。
+// - class Derived を Base から継承し、lastName: String を追加で受け取るようにしてください。
+// - Derived の init ブロックと description の初期化でもログを出力してください。
+// - main 関数で Derived のインスタンスを作成し、初期化の順序を確認してください。
+
+open class Base(name: String) {
+    open val description: String = name.length.toString().also {
+        println("Base description initialized with length: $it")
+    }
+
+    init {
+        println("Base initialized with name: $name")
+    }
+}
+
+class Derived(name: String, lastName: String) : Base(name) {
+    override val description: String = (name + lastName).length.toString().also {
+        println("Derived description initialized with length: $it")
+    }
+
+    init {
+        println("Derived initialized with name: $name and lastName: $lastName")
+    }
+}
+
+// 問題7: inner class から外側のスーパークラスのメソッドにアクセスしてみましょう。
+// - open class OuterBase を作成し、open fun greet() で「Hello from OuterBase」と出力してください。
+// - class Outer を OuterBase から継承し、greet() をオーバーライドして「Hello from Outer」と出力してください。
+// - Outer に inner class Inner を定義し、その中に fun callSuperGreet() を定義してください。
+// - callSuperGreet() では super@Outer.greet() を使って OuterBase の greet() を呼び出してください。
+// - main 関数で Outer.Inner のインスタンスを作成し、callSuperGreet() を呼び出してください。
+
+open class OuterBase {
+    open fun greet() {
+        println("Hello from OuterBase")
+    }
+}
+
+class Outer : OuterBase() {
+    override fun greet() {
+        println("Hello from Outer")
+    }
+
+    inner class Inner {
+        fun callSuperGreet() {
+            super@Outer.greet()
+        }
+    }
+}
+
 fun main() {
     // 問題1
     Dog().speak()
@@ -94,4 +161,9 @@ fun main() {
 
     // 問題4
     C().show()
+
+    // 問題5
+    println(Novel().title)
+    Novel().title = "Change Title"
+    println(Novel().title)
 }
