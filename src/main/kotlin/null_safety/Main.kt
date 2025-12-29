@@ -4,37 +4,56 @@ package org.example.null_safety
  * 公式サイト
  * https://kotlinlang.org/docs/kotlin-tour-null-safety.html
  */
-fun main() {
-     val nullString: String? = null
-     println(describeString(nullString)) // 出力: 空文字またはnullです
 
-     val nullString1: String? = null
-     println(lengthString(nullString1)) // 出力: null
 
-     val nullString2: String? = null
-     println(nullString2?.length ?: 0) // 出力: 0
+// 第1問：基本のNull処理
+//以下のコードはコンパイルエラーになります。**セーフコール（?.）とElvis演算子（?:）**を使って
+// 以下の条件を満たすように修正してください。
+//city が null でなければ、その文字数を変数 length に代入する。
+//city が null であれば、0 を変数 length に代入する。
 
-    println((1..5).sumOf { id -> salaryById(id) })
+fun main1(){
+    val city: String? = null
+
+    // ここを修正してください
+    // val length: Int = city.length
+    val length: Int = city?.length ?: 0
+
+    println(length) // 期待される出力: 0
 }
 
-fun salaryById(id: Int): Int = employeeById(id)?.salary ?: 0
+//第2問：スコープ関数 let と run
+//以下のコードの空欄 ( A ) と ( B ) に入る適切なスコープ関数を答えてください。
 
-data class Employee(val name: String, var salary: Int)
+fun main2() {
+    val message: String? = "Hello Kotlin"
 
-fun employeeById(id: Int) = when (id) {
-    1 -> Employee("Mary", 20)
-    2 -> null
-    3 -> Employee("John", 21)
-    4 -> Employee("Ann", 23)
-    else -> null
-}
-
-fun lengthString(maybeString: String?): Int? = maybeString?.length
-
-fun describeString(maybeString: String?): String {
-    if (!maybeString.isNullOrEmpty()) {
-        return "長さ${maybeString.length}の文字列"
-    } else {
-        return "空文字またはnullです"
+    // ( A ) を使って、it で値を参照してプリントする
+    message?.let {
+        println("メッセージの長さは ${it.length} です")
     }
+
+    // ( B ) を使って、this（省略可）でプロパティにアクセスする
+    message?.run {
+        println("大文字にすると ${uppercase()} です")
+    }
+}
+
+//第3問：応用（コレクションとElvis）
+//以下のリストには null が混ざっています。
+//
+//filterNotNull() を使って null を除外した新しいリストを作ってください。
+//そのリストの 最初の要素（firstOrNull()） を取得し、
+// もしリストが空で結果が null だったら "Unknown" という文字列を代入するようにしてください。
+
+fun main3() {
+    val names: List<String?> = listOf(null, "Alice", "Bob")
+
+    // 1. nullを除外する
+    val cleanedList = names.filterNotNull()
+
+    // 2. 最初の要素を取り出す（nullなら "Unknown"）
+    val firstName: String =  cleanedList.first()
+
+        println(firstName) // 期待される出力: Alice
 }
