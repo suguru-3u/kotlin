@@ -93,6 +93,11 @@ class RandomEmployeeGenerator(var maxSalary: Int, var minSalary: Int) {
         )
 }
 
+/**
+ * データクラスには、equals(), .hashCode(), .toString(),.componentN(),.copy()のメソッドが自動で作成される
+ * またdata classには不変なデータを保持することが期待されているため、valを用いて不変にする必要がある。
+ *
+ */
 data class Employee(val name: String, var salary: Int)
 
 data class Person(
