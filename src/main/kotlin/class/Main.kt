@@ -74,6 +74,27 @@ class ShapeFactory() {
 
 // あなたのコードはこの下に書いてください。
 
+
+class Oder(
+    private val items: List<Item>
+) {
+    init {
+        require( items.isEmpty()) {
+            throw IllegalArgumentException("商品は1つ以上必要です")
+        }
+    }
+    data class Item(val name: String, val price: Int)
+
+    companion object{
+         private const val tax: Double =  1.1
+    }
+
+    fun calculateTotalPrice(): Double {
+        return items.sumOf { it.price } * tax
+    }
+}
+
+
 class Book(val title: String, val author: String, var price: Int = 0) {
     init {
         println("Book titled '$title' by $author is created.")
